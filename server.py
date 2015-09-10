@@ -21,15 +21,12 @@ now = datetime.datetime.now()
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)         # Create a socket object
 host = socket.gethostname() # Get local machine name
 port = 12345 
-logging=False
 
 parser = OptionParser()
 parser.add_option("-p", "--port", action="store", type="string", dest="port")
-parser.add_option("-L", "--log", action="store_true", dest="logging")
 (options, args) = parser.parse_args()
 print options, args, options.port
 port = int(options.port)
-logging = options.logging
 # ====================================================================================
 print "Trying to start server on", host, ":", port
 # Trying to bind the socket :
@@ -39,10 +36,9 @@ except socket.error , msg:
 	print 'Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
 	sys.exit()
 # ====================================================================================
-print "Does we log ? ", logging
-logFileName = "coffeestats_log"+"{0}{1}{2}-{3}{4}".format(now.year,now.month,now.day,now.hour,now.minute,now.second)+".txt"
-if logging:
-	logFile = open(logFileName, 'w')
+#logFileName = "coffeestats_log"+"{0}{1}{2}-{3}{4}".format(now.year,now.month,now.day,now.hour,now.minute,now.second)+".txt"
+logFileName = "coffeestats_log.txt"
+logFile = open(logFileName, 'w')
 
 # Now wait for client connection. We should investigate the argument value
 s.listen(10)
@@ -78,5 +74,4 @@ while True:
 print "Server closing ..."
 s.close()
 
-if logging:
-	logFile.close()
+logFile.close()

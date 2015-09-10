@@ -12,7 +12,7 @@ import numpy as np
 #Function for handling connections. This will be used to create threads
 def clientThread(conn, prodData):
 	#Sending message to connected client
-	conn.send('Welcome to the server. Type /help to get the available commands\n')
+	conn.send('\033[36mWelcome to the Coffee server.\033[39m\n\nType /help to get a list of available commands\n\n>')
 	#infinite loop so that function do not terminate and thread do not end.
 	while True:
 		#Receiving from client
@@ -22,13 +22,20 @@ def clientThread(conn, prodData):
 		
 		command=data.split()
 		print command
+		#reply = "OK... "
 		reply = "OK... "
 
 		if command[0] == "/quit":
+			reply = "Disconnecting"
+			reply = reply + "\n"
+			conn.sendall(reply)
 			break
-	#	elif command[0] == "/help":
-	#		print "/help:"
-	#		print "ToDo!"
+		elif command[0] == "/help":
+			print "/help"
+			reply= "/help : display this help message\n/quit : disconnect and exit program"
+		elif command[0] == "/add":
+			print len(command)
+			reply="Adding recipe !"
 	#	elif command[0] == "/addCoffee":
 	#		print "addCoffee", command[1], command[2]
 	#		# If changed till there
@@ -67,7 +74,7 @@ def clientThread(conn, prodData):
 	#		print status
 	#	else:
 	#		pass
-		reply = reply + "\n"
+		reply = reply + "\n>"
 		conn.sendall(reply)
 	#came out of loop
 	conn.close()
