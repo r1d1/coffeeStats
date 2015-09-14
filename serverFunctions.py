@@ -36,8 +36,8 @@ def clientThread(conn, prodData):
 		elif command[0] == "/add":
 			print len(command)
 			reply="Adding recipe !"
-	#	elif command[0] == "/addCoffee":
-	#		print "addCoffee", command[1], command[2]
+		elif command[0] == "/add":
+			print "adding recipe :", command[1], command[2]
 	#		# If changed till there
 	#		if (command[1] in prod):
 	#			try:
